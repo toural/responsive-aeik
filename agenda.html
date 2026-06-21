@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Agenda</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'IBM Plex Sans', sans-serif;
+        background: #ffffff;
+        color: #333;
+        display: flex;
+        height: 100vh;
+    }
+
+    /* PANEL IZQUIERDO */
+    .left-panel {
+        flex: 2;
+        padding: 40px;
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+    }
+
+    .back-arrow {
+        display: inline-flex;
+        align-items: center;
+        color: #1A73B8;
+        text-decoration: none;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+
+    .arrow-icon {
+        width: 28px;
+        height: 28px;
+        transition: transform 0.2s;
+    }
+
+    .back-arrow:hover .arrow-icon {
+        transform: translateX(-3px);
+    }
+
+    h1 {
+        margin-top: 0;
+        font-size: 2rem;
+        color: #1A73B8;
+    }
+
+    /* PANEL DERECHO */
+    .right-panel {
+        flex: 1;
+        padding: 40px 30px;
+        background: #f7f9fc;
+        border-left: 1px solid #ddd;
+        overflow-y: auto;
+    }
+
+    /* TIMELINE */
+    .timeline {
+        position: relative;
+        margin-left: 20px;
+        padding-left: 30px;
+        border-left: 3px solid #1A73B8;
+    }
+
+    .event {
+        margin-bottom: 40px;
+        position: relative;
+    }
+
+    .event::before {
+        content: "";
+        position: absolute;
+        left: -39px;
+        top: 5px;
+        width: 16px;
+        height: 16px;
+        background: #1A73B8;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        box-shadow: 0 0 0 2px #1A73B8;
+    }
+
+    .event-date {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #1A73B8;
+        margin-bottom: 6px;
+    }
+
+    .event-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .event-type {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .event-desc {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #444;
+    }
+
+</style>
+</head>
+
+<body>
+
+    <!-- PANEL IZQUIERDO -->
+    <div class="left-panel">
+
+        <a href="index.html" class="back-arrow">
+            <svg viewBox="0 0 24 24" class="arrow-icon">
+                <polyline points="15 6 9 12 15 18" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </a>
+
+        <h1>Agenda</h1>
+
+        <div class="timeline" id="timeline"></div>
+
+    </div>
+
+    <!-- PANEL DERECHO -->
+    <div class="right-panel">
+        <h2>Próximos eventos</h2>
+        <p>Consulta aquí las actividades programadas: conferencias, visitas guiadas, eventos sociales y más.</p>
+    </div>
+
+<script>
+/* ============================================================
+   EVENTOS — EDITA ESTE ARRAY PARA AÑADIR O CAMBIAR ACTIVIDADES
+   ============================================================ */
+
+const eventos = [
+    {
+        fecha: "12 junio 2026",
+        titulo: "Conferencia: Inteligencia Artificial y Sociedad",
+        tipo: "Conferencia",
+        descripcion: "Ponencia impartida por expertos en IA sobre el impacto social y ético de las nuevas tecnologías."
+    },
+    {
+        fecha: "20 junio 2026",
+        titulo: "Visita guiada al Museo del Prado",
+        tipo: "Visita guiada",
+        descripcion: "Recorrido cultural por las obras maestras del museo con guía especializado."
+    },
+    {
+        fecha: "5 julio 2026",
+        titulo: "Encuentro anual de socios",
+        tipo: "Evento social",
+        descripcion: "Reunión anual con actividades, presentaciones y espacio para compartir experiencias."
+    },
+    {
+        fecha: "18 julio 2026",
+        titulo: "Voluntariado: Apoyo a mayores",
+        tipo: "Voluntariado social",
+        descripcion: "Actividad de acompañamiento y apoyo a personas mayores en colaboración con entidades locales."
+    }
+];
+
+/* ============================================================
+   GENERAR TIMELINE
+   ============================================================ */
+
+const timeline = document.getElementById("timeline");
+
+eventos.forEach(ev => {
+    const div = document.createElement("div");
+    div.className = "event";
+
+    div.innerHTML = `
+        <div class="event-date">${ev.fecha}</div>
+        <div class="event-title">${ev.titulo}</div>
+        <div class="event-type">${ev.tipo}</div>
+        <div class="event-desc">${ev.descripcion}</div>
+    `;
+
+    timeline.appendChild(div);
+});
+</script>
+
+</body>
+</html>
