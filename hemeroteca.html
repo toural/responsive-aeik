@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Hemeroteca</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'IBM Plex Sans', sans-serif;
+        background: #ffffff;
+        color: #333;
+        display: flex;
+        height: 100vh;
+    }
+
+    .left-panel {
+        flex: 2;
+        padding: 40px;
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+    }
+
+    .back-arrow {
+        display: inline-flex;
+        align-items: center;
+        color: #1A73B8;
+        text-decoration: none;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+
+    .arrow-icon {
+        width: 28px;
+        height: 28px;
+        transition: transform 0.2s;
+    }
+
+    .back-arrow:hover .arrow-icon {
+        transform: translateX(-3px);
+    }
+
+    h1 {
+        margin-top: 0;
+        font-size: 2rem;
+        color: #1A73B8;
+    }
+
+    .right-panel {
+        flex: 1;
+        padding: 40px 30px;
+        background: #f7f9fc;
+        overflow-y: auto;
+        border-left: 1px solid #ddd;
+    }
+
+    .submenu-item {
+        padding: 12px 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        transition: background 0.2s, border-color 0.2s;
+    }
+
+    .submenu-item:hover {
+        background: #eef5ff;
+    }
+
+    .submenu-item.active {
+        background: #dceaff;
+        border-color: #1A73B8;
+        font-weight: 600;
+    }
+
+    .submenu-arrow {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.2s;
+    }
+
+    .submenu-item.active .submenu-arrow {
+        transform: rotate(90deg);
+    }
+
+    .content-block {
+        display: none;
+    }
+
+    .content-block.active {
+        display: block;
+    }
+</style>
+</head>
+
+<body>
+
+    <div class="left-panel">
+
+        <a href="index.html" class="back-arrow">
+            <svg viewBox="0 0 24 24" class="arrow-icon">
+                <polyline points="15 6 9 12 15 18" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </a>
+
+        <h1>Hemeroteca</h1>
+
+        <div id="content-revistas" class="content-block active">
+            <h2>Revistas AEIK</h2>
+            <p>Consulta las revistas publicadas por la Asociación a lo largo de los años.</p>
+        </div>
+
+        <div id="content-boletines" class="content-block">
+            <h2>Boletines informativos</h2>
+            <p>Acceso a boletines periódicos con información relevante para los socios.</p>
+        </div>
+
+        <div id="content-archivo" class="content-block">
+            <h2>Archivo histórico</h2>
+            <p>Documentación, publicaciones y materiales históricos de la Asociación.</p>
+        </div>
+
+    </div>
+
+    <div class="right-panel">
+
+        <div class="submenu-item active" data-target="content-revistas">
+            Revistas AEIK
+            <svg class="submenu-arrow" viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </div>
+
+        <div class="submenu-item" data-target="content-boletines">
+            Boletines informativos
+            <svg class="submenu-arrow" viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </div>
+
+        <div class="submenu-item" data-target="content-archivo">
+            Archivo histórico
+            <svg class="submenu-arrow" viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </div>
+
+    </div>
+
+<script>
+    const items = document.querySelectorAll('.submenu-item');
+    const blocks = document.querySelectorAll('.content-block');
+
+    function activarSeccion(targetId) {
+        if (!targetId) return;
+
+        items.forEach(i => i.classList.remove('active'));
+        blocks.forEach(b => b.classList.remove('active'));
+
+        const bloque = document.getElementById(targetId);
+        if (bloque) bloque.classList.add('active');
+
+        const menuItem = document.querySelector(`[data-target="${targetId}"]`);
+        if (menuItem) menuItem.classList.add('active');
+    }
+
+    items.forEach(item => {
+        item.addEventListener('click', () => {
+            activarSeccion(item.dataset.target);
+        });
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const sec = params.get("sec");
+
+    if (sec) {
+        const map = {
+            "revistas": "content-revistas",
+            "boletines": "content-boletines",
+            "archivo": "content-archivo"
+        };
+
+        activarSeccion(map[sec]);
+    }
+</script>
+
+</body>
+</html>
