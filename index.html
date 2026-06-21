@@ -209,11 +209,32 @@
         </div>
     </div>
 
-    <!-- RESTO DEL MOSAICO -->
-    <div class="item">
-        <img src="imagenes/guias2.png" alt="Guías">
-        <h3>Guías</h3>
+<!-- GUÍAS -->
+<div class="item">
+    <div class="item-header">
+        <img src="imagenes/guias2.png" id="icon-guias">
+
+        <div class="label-wrapper">
+            <span id="txt-guias">Guías</span>
+
+            <div class="subsecciones" id="sub-guias">
+                <div class="sub-item" data-section="jubilacion">Guías de Jubilación y Pensiones</div>
+                <div class="sub-item" data-section="salud">Guías de Salud y Bienestar</div>
+                <div class="sub-item" data-section="digitales">Guías Digitales</div>
+                <div class="sub-item" data-section="ocio">Guías de Ocio y Viajes</div>
+                <div class="sub-item" data-section="voluntariado">Guías de Participación y Voluntariado</div>
+                <div class="sub-item" data-section="formacion">Guías de Formación Permanente</div>
+            </div>
+        </div>
     </div>
+</div>
+
+
+
+
+    
+    <!-- RESTO DEL MOSAICO -->
+   
 
     <div class="item">
         <img src="imagenes/beneficios.png" alt="Beneficios">
@@ -248,35 +269,85 @@
 </div>
 
 <script>
-const txt = document.getElementById("txt-asociacion");
-const icon = document.getElementById("icon-asociacion");
-const box = document.getElementById("sub-asociacion");
+/* ============================================================
+   SISTEMA GENERAL DE DESPLEGABLES PARA LA HOME AEIK
+   ============================================================ */
 
-// Abrir/cerrar desplegable
-txt.addEventListener("click", (e) => {
-    e.stopPropagation();
-    box.style.display = (box.style.display === "block") ? "none" : "block";
-});
+/* --- FUNCIÓN GENÉRICA PARA CREAR UN DESPLEGABLE --- */
 
-// Cerrar al hacer click fuera
-document.addEventListener("click", () => {
-    box.style.display = "none";
-});
+function crearDesplegable(idTexto, idIcono, idCaja, paginaDestino) {
 
-// Icono → ir a la página
-icon.addEventListener("click", () => {
-    window.location.href = "asociacion.html";
-});
+    const txt = document.getElementById(idTexto);
+    const icon = document.getElementById(idIcono);
+    const box = document.getElementById(idCaja);
 
-// Items del desplegable → navegar
-document.querySelectorAll(".sub-item").forEach(item => {
-    item.addEventListener("click", (e) => {
+    if (!txt || !icon || !box) return;
+
+    // Abrir/cerrar desplegable
+    txt.addEventListener("click", (e) => {
         e.stopPropagation();
-        const section = item.dataset.section;
-        window.location.href = "asociacion.html?sec=" + section;
+        box.style.display = (box.style.display === "block") ? "none" : "block";
     });
-});
+
+    // Cerrar al hacer click fuera
+    document.addEventListener("click", () => {
+        box.style.display = "none";
+    });
+
+    // Icono → ir a la página principal
+    icon.addEventListener("click", () => {
+        window.location.href = paginaDestino;
+    });
+
+    // Items del desplegable → navegar a subsección
+    box.querySelectorAll(".sub-item").forEach(item => {
+        item.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const section = item.dataset.section;
+            window.location.href = paginaDestino + "?sec=" + section;
+        });
+    });
+}
+
+/* ============================================================
+   DESPLEGABLE: ASOCIACIÓN
+   ============================================================ */
+
+crearDesplegable(
+    "txt-asociacion",   // ID del texto
+    "icon-asociacion",  // ID del icono
+    "sub-asociacion",   // ID del panel desplegable
+    "asociacion.html"   // Página destino
+);
+
+
+/* ============================================================
+   DESPLEGABLE: GUÍAS
+   ============================================================ */
+
+crearDesplegable(
+    "txt-guias",
+    "icon-guias",
+    "sub-guias",
+    "guias.html"
+);
+
+
+/* ============================================================
+   LISTO PARA AÑADIR MÁS SECCIONES
+   ------------------------------------------------------------
+   Ejemplo para Beneficios (cuando lo tengas preparado):
+   
+   crearDesplegable(
+       "txt-beneficios",
+       "icon-beneficios",
+       "sub-beneficios",
+       "beneficios.html"
+   );
+   ============================================================ */
+
 </script>
+
 
 </body>
 </html>
