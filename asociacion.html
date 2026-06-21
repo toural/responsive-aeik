@@ -187,4 +187,33 @@
 
             item.classList.add('active');
             const target = document.getElementById(item.dataset.target);
-            target
+            target.classList.add('active');
+        });
+    });
+
+    // --- ACTIVAR SUBSECCIÓN SEGÚN PARÁMETRO ?sec= ---
+    const params = new URLSearchParams(window.location.search);
+    const sec = params.get("sec");
+
+    if (sec) {
+        const map = {
+            "quienes": "content-quienes",
+            "sedes": "content-sedes",
+            "distinciones": "content-distinciones",
+            "contacto": "content-contacto"
+        };
+
+        const targetId = map[sec];
+
+        if (targetId) {
+            items.forEach(i => i.classList.remove("active"));
+            blocks.forEach(b => b.classList.remove("active"));
+
+            document.getElementById(targetId).classList.add("active");
+            document.querySelector(`[data-target="${targetId}"]`).classList.add("active");
+        }
+    }
+</script>
+
+</body>
+</html>
