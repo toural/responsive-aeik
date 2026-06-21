@@ -94,6 +94,31 @@
     .content-block.active {
         display: block;
     }
+
+<style>
+.revista-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.revista-item img {
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.revista-item:hover img {
+    transform: scale(1.04);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+</style>
+
+
+
+
 </style>
 </head>
 
@@ -109,11 +134,60 @@
 
         <h1>Hemeroteca</h1>
 
-        <div id="content-revistas" class="content-block active">
-            <h2>Revistas AEIK</h2>
-            <p>Consulta las revistas publicadas por la Asociación a lo largo de los años.</p>
-        </div>
 
+<div id="content-revistas" class="content-block active">
+    <h2>Revistas AEIK</h2>
+
+    <div class="revista-grid">
+
+        <!-- EJEMPLOS — Sustituye las imágenes y enlaces por los reales -->
+        <a href="revistas/AEIK_71.pdf" class="revista-item" target="_blank">
+            <img src="imagenes/revistas/71.jpg" alt="Revista AEIK Nº71">
+        </a>
+
+        <a href="revistas/AEIK_70.pdf" class="revista-item" target="_blank">
+            <img src="imagenes/revistas/70.jpg" alt="Revista AEIK Nº70">
+        </a>
+
+        <a href="revistas/AEIK_69.pdf" class="revista-item" target="_blank">
+            <img src="imagenes/revistas/69.jpg" alt="Revista AEIK Nº69">
+        </a>
+
+        <a href="revistas/AEIK_68.pdf" class="revista-item" target="_blank">
+            <img src="imagenes/revistas/68.jpg" alt="Revista AEIK Nº68">
+        </a>
+
+        <a href="revistas/AEIK_67.pdf" class="revista-item" target="_blank">
+            <img src="imagenes/revistas/67.jpg" alt="Revista AEIK Nº67">
+        </a>
+
+        <a href="revistas/AEIK_66.pdf" class="revista-item" target="_blank">
+            <img src="imagenes/revistas/66.jpg" alt="Revista AEIK Nº66">
+        </a>
+
+        <a href="revistas/AEIK_65.pdf" class="revista-item" target="_blank">
+            <img src="imagenes/revistas/65.jpg" alt="Revista AEIK Nº65">
+        </a>
+
+        <a href="revistas/AEIK_64.pdf" class="revista-item" target="_blank">
+            <img src="imagenes/revistas/64.jpg" alt="Revista AEIK Nº64">
+        </a>
+
+        <a href="revistas/AEIK_63.pdf" class="revista-item" target="_blank">
+            <img src="imagenes/revistas/63.jpg" alt="Revista AEIK Nº63">
+        </a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+        
         <div id="content-boletines" class="content-block">
             <h2>Boletines informativos</h2>
             <p>Acceso a boletines periódicos con información relevante para los socios.</p>
