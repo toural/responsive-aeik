@@ -1,8 +1,9 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>AEIK</title>
+
     <style>
 
 /* Cuadrícula editorial estilo AEIK */
@@ -23,7 +24,7 @@
     padding: 35px 20px;
     text-align: center;
     background: #fff;
-    position: relative; /* NECESARIO para el desplegable flotante */
+    position: relative;
 }
 
 /* Iconos */
@@ -31,7 +32,6 @@
     width: 170px;
     height: auto;
     object-fit: contain;
-    margin-bottom: 15px;
 }
 
 /* Títulos */
@@ -40,7 +40,7 @@
     font-size: 0.95rem;
     font-weight: 600;
     color: #1A73B8;
-    margin: 8px 0 0 0;
+    margin-top: 12px;
 }
 
 /* Hover editorial */
@@ -116,18 +116,26 @@
     cursor: pointer;
 }
 
+/* Alineación icono + texto */
 .item-header {
     display: flex;
     flex-direction: column;
-    align-items: center; /* icono y texto centrados entre sí */
+    align-items: center;
     gap: 8px;
 }
-        
-/* DESPLEGABLE FLOTANTE EDITORIAL */
 
+/* Contenedor del texto y desplegable */
+.label-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* DESPLEGABLE FLOTANTE */
 .subsecciones {
     position: absolute;
-    top: calc(100% + 2px); /* pegado al texto */
+    top: calc(100% + 2px);
     left: 0;
     z-index: 20;
     width: 180px;
@@ -152,43 +160,9 @@
 .sub-item:hover {
     background: #eef5ff;
 }
-        
-.label-wrapper {
-    position: relative; /* el desplegable se ancla AQUÍ */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-}   
+
     </style>
 </head>
-
-<script>
-// Abrir/cerrar desplegable
-txt.addEventListener("click", (e) => {
-    e.stopPropagation();
-    box.style.display = (box.style.display === "block") ? "none" : "block";
-});
-
-// Cerrar al hacer click fuera
-document.addEventListener("click", () => {
-    box.style.display = "none";
-});
-
-// Icono → ir a la página
-icon.addEventListener("click", () => {
-    window.location.href = "asociacion.html";
-});
-
-// Items del desplegable → navegar
-document.querySelectorAll(".sub-item").forEach(item => {
-    item.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const section = item.dataset.section;
-        window.location.href = "asociacion.html?sec=" + section;
-    });
-});
-</script>
 
 <body>
 
@@ -217,26 +191,25 @@ document.querySelectorAll(".sub-item").forEach(item => {
 
 <div class="mosaico">
 
-    <!-- LA ASOCIACIÓN -->
+    <!-- ASOCIACIÓN -->
+    <div class="item">
+        <div class="item-header">
+            <img src="imagenes/asociacion2.png" id="icon-asociacion">
 
-<div class="item">
-    <div class="item-header">
-        <img src="imagenes/asociacion2.png" id="icon-asociacion">
+            <div class="label-wrapper">
+                <span id="txt-asociacion">Asociación</span>
 
-        <div class="label-wrapper">
-            <span id="txt-asociacion">Asociación</span>
-            <div class="subsecciones" id="sub-asociacion">
-                <div class="sub-item" data-section="quienes">¿Quiénes somos?</div>
-                <div class="sub-item" data-section="sedes">Sedes Locales</div>
-                <div class="sub-item" data-section="distinciones">Distinciones</div>
-                <div class="sub-item" data-section="contacto">Contacto</div>
+                <div class="subsecciones" id="sub-asociacion">
+                    <div class="sub-item" data-section="quienes">¿Quiénes somos?</div>
+                    <div class="sub-item" data-section="sedes">Sedes Locales</div>
+                    <div class="sub-item" data-section="distinciones">Distinciones</div>
+                    <div class="sub-item" data-section="contacto">Contacto</div>
+                </div>
             </div>
         </div>
     </div>
-</div>         
-        
-    </div>
 
+    <!-- RESTO DEL MOSAICO -->
     <div class="item">
         <img src="imagenes/guias2.png" alt="Guías">
         <h3>Guías</h3>
@@ -279,22 +252,29 @@ const txt = document.getElementById("txt-asociacion");
 const icon = document.getElementById("icon-asociacion");
 const box = document.getElementById("sub-asociacion");
 
-// Click en texto → desplegar flotante
-txt.addEventListener("click", () => {
+// Abrir/cerrar desplegable
+txt.addEventListener("click", (e) => {
+    e.stopPropagation();
     box.style.display = (box.style.display === "block") ? "none" : "block";
 });
 
-// Click en icono → ir a la página
+// Cerrar al hacer click fuera
+document.addEventListener("click", () => {
+    box.style.display = "none";
+});
+
+// Icono → ir a la página
 icon.addEventListener("click", () => {
     window.location.href = "asociacion.html";
 });
 
-// Doble click en texto o icono → ir a la página
-txt.addEventListener("dblclick", () => {
-    window.location.href = "asociacion.html";
-});
-icon.addEventListener("dblclick", () => {
-    window.location.href = "asociacion.html";
+// Items del desplegable → navegar
+document.querySelectorAll(".sub-item").forEach(item => {
+    item.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const section = item.dataset.section;
+        window.location.href = "asociacion.html?sec=" + section;
+    });
 });
 </script>
 
