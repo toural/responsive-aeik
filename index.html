@@ -115,8 +115,6 @@
     font-family: "IBM Plex Sans", sans-serif;
     font-size: 0.9rem;
 }
-
-
         
         
     /* TEXTO DEL MOSAICO */
@@ -197,7 +195,7 @@
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
         </button>
-
+        
         <div class="search-box">
             <input type="text" placeholder="Buscar...">
         </div>
@@ -410,6 +408,39 @@ crearDesplegable("txt-socios", "icon-socios", "sub-socios", "socios.html");
 crearDesplegable("txt-noticias", "icon-noticias", "sub-noticias", "noticias.html");
 crearDesplegable("txt-actividades", "icon-actividades", "sub-actividades", "actividades.html");
 crearDesplegable("txt-hemeroteca", "icon-hemeroteca", "sub-hemeroteca", "hemeroteca.html");
+
+// lupa
+
+<script>
+const searchToggle = document.querySelector(".search-toggle");
+const searchBox = document.querySelector(".search-box");
+
+searchToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const visible = searchBox.style.display === "block";
+    searchBox.style.display = visible ? "none" : "block";
+
+    if (!visible) {
+        const input = searchBox.querySelector("input");
+        if (input) input.focus();
+    }
+});
+
+// Cerrar al hacer clic fuera
+document.addEventListener("click", () => {
+    searchBox.style.display = "none";
+});
+
+// Evitar que un clic dentro cierre la caja
+searchBox.addEventListener("click", (e) => {
+    e.stopPropagation();
+});
+</script>
+
+
+
+    
 </script>
 
 
