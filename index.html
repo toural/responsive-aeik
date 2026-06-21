@@ -263,6 +263,7 @@
                 <div class="sub-item" data-section="porques">¿Por qué asociarse?</div>
                 <div class="sub-item" data-section="cuotas">Cuotas de inscripción</div>
                 <div class="sub-item" data-section="formulario">Formulario de alta</div>
+                 <div class="sub-item" data-section="rincon">Rincón del asociado</div>
                 <div class="sub-item" data-section="privada">Área Privada</div>
             </div>
         </div>
@@ -286,19 +287,29 @@
         </div>
     </div>
 </div>
+
+<!-- ACTIVIDADES -->
+<div class="item">
+    <div class="item-header">
+        <img src="imagenes/actividades.png" id="icon-actividades">
+
+        <div class="label-wrapper">
+            <span id="txt-actividades">Actividades</span>
+
+            <div class="subsecciones" id="sub-actividades">
+                <div class="sub-item" data-section="eventos">Eventos</div>
+                <div class="sub-item" data-section="visitas">Visitas guiadas</div>
+                <div class="sub-item" data-section="conferencias">Conferencias</div>
+                <div class="sub-item" data-section="propuestas">Formulario de propuestas</div>
+                <div class="sub-item" data-section="voluntariado">Voluntariado social</div>
+            </div>
+        </div>
+    </div>
+</div>
     
     <!-- RESTO DEL MOSAICO -->
    
 
-
-    
-
-   
-
-    <div class="item">
-        <img src="imagenes/actividades.png" alt="Actividades">
-        <h3>Actividades</h3>
-    </div>
 
     <div class="item">
         <img src="imagenes/hemeroteca.png" alt="Hemeroteca">
@@ -397,6 +408,13 @@ crearDesplegable(
     "noticias.html"
 );
 
+crearDesplegable(
+    "txt-actividades",
+    "icon-actividades",
+    "sub-actividades",
+    "actividades.html"
+);
+    
 </script>
 
 
