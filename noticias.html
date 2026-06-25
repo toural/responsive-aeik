@@ -94,6 +94,54 @@
     .content-block.active {
         display: block;
     }
+
+/* ============================
+   RESPONSIVE: TABLET Y MÓVIL
+   ============================ */
+
+/* 1) En pantallas pequeñas, el body deja de ser flex horizontal */
+@media (max-width: 1024px) {
+    body {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-panel,
+    .right-panel {
+        width: 100%;
+        padding: 25px;
+        border: none;
+    }
+
+    .right-panel {
+        background: #f7f9fc;
+        border-top: 1px solid #ddd;
+    }
+}
+
+/* 2) Ajustes específicos para móvil */
+@media (max-width: 600px) {
+    .left-panel,
+    .right-panel {
+        padding: 18px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+
+
+    
 </style>
 </head>
 
