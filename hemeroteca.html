@@ -95,70 +95,108 @@
         display: block;
     }
 
-/* ============================
-   CUADRÍCULA DE REVISTAS AEIK
-   ============================ */
+    /* ============================
+       CUADRÍCULA DE REVISTAS AEIK
+       ============================ */
+    .revista-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin-top: 20px;
+    }
 
-.revista-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* EXACTAMENTE 3 columnas */
-    gap: 25px;
-    margin-top: 20px;
-}
+    .revista-item {
+        display: flex;
+        justify-content: center;
+    }
 
-.revista-item {
-    display: flex;
-    justify-content: center;
-}
+    .revista-item img {
+        width: 100%;
+        max-width: 160px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
 
-.revista-item img {
-    width: 100%;
-    max-width: 160px; /* tamaño máximo de cada portada */
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+    .revista-item:hover img {
+        transform: scale(1.04);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    }
 
-.revista-item:hover img {
-    transform: scale(1.04);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-}
+    /* ============================
+       TABS MÓVIL
+       ============================ */
+    .tabs-movil {
+        display: none;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 
+    .tab-item {
+        display: inline-block;
+        padding: 10px 16px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1A73B8;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+    }
 
+    .tab-item.active {
+        border-bottom: 3px solid #1A73B8;
+        color: #1A73B8;
+    }
 
+    /* ============================
+       RESPONSIVE
+       ============================ */
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+            height: auto;
+        }
 
-    
-<style>
+        .left-panel,
+        .right-panel {
+            width: 100%;
+            padding: 25px;
+            border: none;
+            overflow-y: visible;
+        }
 
+        .right-panel {
+            display: none; /* OCULTAR PANEL LATERAL EN MÓVIL */
+        }
 
-.revista-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* EXACTAMENTE 3 columnas */
-    gap: 25px;
-    margin-top: 20px;
-}
+        .tabs-movil {
+            display: block; /* MOSTRAR TABS EN MÓVIL */
+        }
 
-.revista-item img {
-    width: 100%;
-    max-width: 160px; /* tamaño máximo de cada portada */
-    margin: 0 auto;   /* centrado */
-    display: block;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+        .revista-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
 
+    @media (max-width: 600px) {
+        .left-panel,
+        .right-panel {
+            padding: 18px;
+        }
 
+        .revista-grid {
+            grid-template-columns: 1fr;
+        }
 
-.revista-item:hover img {
-    transform: scale(1.04);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-}
-</style>
+        h1 {
+            font-size: 1.6rem;
+        }
 
-
-
-
+        h2 {
+            font-size: 1.3rem;
+        }
+    }
 </style>
 </head>
 
@@ -174,60 +212,40 @@
 
         <h1>Hemeroteca</h1>
 
+        <!-- NAV MÓVIL -->
+        <div class="tabs-movil">
+            <div class="tab-item active" data-target="content-revistas">Revistas</div>
+            <div class="tab-item" data-target="content-boletines">Boletines</div>
+            <div class="tab-item" data-target="content-archivo">Archivo</div>
+        </div>
 
-<div id="content-revistas" class="content-block active">
-    <h2>Revistas AEIK</h2>
+        <!-- SECCIONES -->
+        <div id="content-revistas" class="content-block active">
+            <h2>Revistas AEIK</h2>
 
-    <div class="revista-grid">
+            <div class="revista-grid">
+                <!-- EJEMPLOS — Sustituye por tus datos reales -->
+                <a href="revistas/AEIK_71.pdf" class="revista-item" target="_blank">
+                    <img src="imagenes/revistas/71.png" alt="Revista AEIK Nº71">
+                </a>
+                <a href="revistas/AEIK_70.pdf" class="revista-item" target="_blank">
+                    <img src="imagenes/revistas/70.png" alt="Revista AEIK Nº70">
+                </a>
+                <a href="revistas/AEIK_69.pdf" class="revista-item" target="_blank">
+                    <img src="imagenes/revistas/69.png" alt="Revista AEIK Nº69">
+                </a>
+                <a href="revistas/AEIK_68.pdf" class="revista-item" target="_blank">
+                    <img src="imagenes/revistas/68.png" alt="Revista AEIK Nº68">
+                </a>
+                <a href="revistas/AEIK_67.pdf" class="revista-item" target="_blank">
+                    <img src="imagenes/revistas/67.png" alt="Revista AEIK Nº67">
+                </a>
+                <a href="revistas/AEIK_66.pdf" class="revista-item" target="_blank">
+                    <img src="imagenes/revistas/66.png" alt="Revista AEIK Nº66">
+                </a>
+            </div>
+        </div>
 
-        <!-- EJEMPLOS — Sustituye las imágenes y enlaces por los reales -->
-        <a href="revistas/AEIK_71.pdf" class="revista-item" target="_blank">
-            <img src="imagenes/revistas/71.png" alt="Revista AEIK Nº71">
-        </a>
-
-        <a href="revistas/AEIK_70.pdf" class="revista-item" target="_blank">
-            <img src="imagenes/revistas/70.png" alt="Revista AEIK Nº70">
-        </a>
-
-        <a href="revistas/AEIK_69.pdf" class="revista-item" target="_blank">
-            <img src="imagenes/revistas/69.png" alt="Revista AEIK Nº69">
-        </a>
-
-        <a href="revistas/AEIK_68.pdf" class="revista-item" target="_blank">
-            <img src="imagenes/revistas/68.png" alt="Revista AEIK Nº68">
-        </a>
-
-        <a href="revistas/AEIK_67.pdf" class="revista-item" target="_blank">
-            <img src="imagenes/revistas/67.png" alt="Revista AEIK Nº67">
-        </a>
-
-        <a href="revistas/AEIK_66.pdf" class="revista-item" target="_blank">
-            <img src="imagenes/revistas/66.png" alt="Revista AEIK Nº66">
-        </a>
-
-        <a href="revistas/AEIK_65.pdf" class="revista-item" target="_blank">
-            <img src="imagenes/revistas/65.png" alt="Revista AEIK Nº65">
-        </a>
-
-        <a href="revistas/AEIK_64.pdf" class="revista-item" target="_blank">
-            <img src="imagenes/revistas/64.png" alt="Revista AEIK Nº64">
-        </a>
-
-        <a href="revistas/AEIK_63.pdf" class="revista-item" target="_blank">
-            <img src="imagenes/revistas/63.png" alt="Revista AEIK Nº63">
-        </a>
-
-    </div>
-</div>
-
-
-
-
-
-
-
-
-        
         <div id="content-boletines" class="content-block">
             <h2>Boletines informativos</h2>
             <p>Acceso a boletines periódicos con información relevante para los socios.</p>
@@ -240,6 +258,7 @@
 
     </div>
 
+    <!-- PANEL LATERAL (solo escritorio) -->
     <div class="right-panel">
 
         <div class="submenu-item active" data-target="content-revistas">
@@ -266,40 +285,49 @@
     </div>
 
 <script>
-    const items = document.querySelectorAll('.submenu-item');
-    const blocks = document.querySelectorAll('.content-block');
+/* ------------------------------
+   SISTEMA DE SECCIONES
+--------------------------------*/
+const items = document.querySelectorAll('.submenu-item');
+const blocks = document.querySelectorAll('.content-block');
+const tabs = document.querySelectorAll('.tab-item');
 
-    function activarSeccion(targetId) {
-        if (!targetId) return;
+function activarSeccion(targetId) {
+    items.forEach(i => i.classList.remove('active'));
+    tabs.forEach(t => t.classList.remove('active'));
+    blocks.forEach(b => b.classList.remove('active'));
 
-        items.forEach(i => i.classList.remove('active'));
-        blocks.forEach(b => b.classList.remove('active'));
+    document.getElementById(targetId).classList.add('active');
 
-        const bloque = document.getElementById(targetId);
-        if (bloque) bloque.classList.add('active');
+    const menuItem = document.querySelector(`.submenu-item[data-target="${targetId}"]`);
+    if (menuItem) menuItem.classList.add('active');
 
-        const menuItem = document.querySelector(`[data-target="${targetId}"]`);
-        if (menuItem) menuItem.classList.add('active');
-    }
+    const tabItem = document.querySelector(`.tab-item[data-target="${targetId}"]`);
+    if (tabItem) tabItem.classList.add('active');
+}
 
-    items.forEach(item => {
-        item.addEventListener('click', () => {
-            activarSeccion(item.dataset.target);
-        });
-    });
+/* Click en panel lateral */
+items.forEach(item => {
+    item.addEventListener('click', () => activarSeccion(item.dataset.target));
+});
 
-    const params = new URLSearchParams(window.location.search);
-    const sec = params.get("sec");
+/* Click en tabs móvil */
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => activarSeccion(tab.dataset.target));
+});
 
-    if (sec) {
-        const map = {
-            "revistas": "content-revistas",
-            "boletines": "content-boletines",
-            "archivo": "content-archivo"
-        };
+/* Parámetro URL */
+const params = new URLSearchParams(window.location.search);
+const sec = params.get("sec");
 
-        activarSeccion(map[sec]);
-    }
+if (sec) {
+    const map = {
+        "revistas": "content-revistas",
+        "boletines": "content-boletines",
+        "archivo": "content-archivo"
+    };
+    activarSeccion(map[sec]);
+}
 </script>
 
 </body>
