@@ -95,53 +95,96 @@
         display: block;
     }
 
-/* ============================
-   RESPONSIVE: TABLET Y MÓVIL
-   ============================ */
-
-/* 1) En pantallas pequeñas, el body deja de ser flex horizontal */
-@media (max-width: 1024px) {
-    body {
-        flex-direction: column;
-        height: auto;
+    /* Cuadrícula de noticias */
+    .noticias-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+        margin-top: 25px;
     }
 
-    .left-panel,
-    .right-panel {
-        width: 100%;
-        padding: 25px;
+    .noticia-item {
+        background: #fff;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 6px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .noticia-item h3 {
+        margin: 0 0 8px 0;
+        color: #1A73B8;
+        font-size: 1.1rem;
+    }
+
+    .noticia-item p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    .btn-cargar {
+        margin-top: 25px;
+        padding: 12px 20px;
+        background: #1A73B8;
+        color: #fff;
         border: none;
-    }
-
-    .right-panel {
-        background: #f7f9fc;
-        border-top: 1px solid #ddd;
-    }
-}
-
-/* 2) Ajustes específicos para móvil */
-@media (max-width: 600px) {
-    .left-panel,
-    .right-panel {
-        padding: 18px;
-    }
-
-    h1 {
-        font-size: 1.6rem;
-    }
-
-    h2 {
-        font-size: 1.3rem;
-    }
-
-    p {
+        border-radius: 6px;
+        cursor: pointer;
         font-size: 1rem;
+        font-weight: 600;
     }
-}
 
+    .btn-cargar:hover {
+        background: #155d94;
+    }
 
+    /* ============================
+       RESPONSIVE
+       ============================ */
 
-    
+    @media (max-width: 1024px) {
+        body {
+            flex-direction: column;
+            height: auto;
+        }
+
+        .left-panel,
+        .right-panel {
+            width: 100%;
+            padding: 25px;
+            border: none;
+            overflow-y: visible;
+        }
+
+        .right-panel {
+            background: #f7f9fc;
+            border-top: 1px solid #ddd;
+        }
+
+        .noticias-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .left-panel,
+        .right-panel {
+            padding: 18px;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
 </style>
 </head>
 
@@ -157,24 +200,29 @@
 
         <h1>Noticias</h1>
 
+        <!-- Secciones -->
         <div id="content-ultimas" class="content-block active">
             <h2>Últimas Noticias</h2>
-            <p>Actualidad reciente de la Asociación y actividades más destacadas.</p>
+            <div id="gridUltimas" class="noticias-grid"></div>
+            <button id="btnUltimas" class="btn-cargar">Cargar más</button>
         </div>
 
         <div id="content-memoriam" class="content-block">
             <h2>In Memoriam</h2>
-            <p>Homenaje a los compañeros que nos han dejado.</p>
+            <div id="gridMemoriam" class="noticias-grid"></div>
+            <button id="btnMemoriam" class="btn-cargar">Cargar más</button>
         </div>
 
         <div id="content-archivo" class="content-block">
             <h2>Archivo Histórico</h2>
-            <p>Acceso a noticias de años anteriores (archivo 2010–2015 y posteriores).</p>
+            <div id="gridArchivo" class="noticias-grid"></div>
+            <button id="btnArchivo" class="btn-cargar">Cargar más</button>
         </div>
 
         <div id="content-galeria" class="content-block">
             <h2>Galería Multimedia</h2>
-            <p>Fotos y vídeos de los eventos realizados.</p>
+            <div id="gridGaleria" class="noticias-grid"></div>
+            <button id="btnGaleria" class="btn-cargar">Cargar más</button>
         </div>
 
     </div>
@@ -212,41 +260,114 @@
     </div>
 
 <script>
-    const items = document.querySelectorAll('.submenu-item');
-    const blocks = document.querySelectorAll('.content-block');
+/* ------------------------------
+   SISTEMA DE SECCIONES
+--------------------------------*/
+const items = document.querySelectorAll('.submenu-item');
+const blocks = document.querySelectorAll('.content-block');
 
-    function activarSeccion(targetId) {
-        if (!targetId) return;
+function activarSeccion(targetId) {
+    items.forEach(i => i.classList.remove('active'));
+    blocks.forEach(b => b.classList.remove('active'));
 
-        items.forEach(i => i.classList.remove('active'));
-        blocks.forEach(b => b.classList.remove('active'));
+    document.getElementById(targetId).classList.add('active');
+    document.querySelector(`[data-target="${targetId}"]`).classList.add('active');
+}
 
-        const bloque = document.getElementById(targetId);
-        if (bloque) bloque.classList.add('active');
+items.forEach(item => {
+    item.addEventListener('click', () => activarSeccion(item.dataset.target));
+});
 
-        const menuItem = document.querySelector(`[data-target="${targetId}"]`);
-        if (menuItem) menuItem.classList.add('active');
+/* ------------------------------
+   PAGINADOR GENÉRICO
+--------------------------------*/
+class Paginador {
+    constructor(items, renderFn, container, boton, tam = 6) {
+        this.items = items;
+        this.renderFn = renderFn;
+        this.container = container;
+        this.boton = boton;
+        this.tam = tam;
+        this.pagina = 0;
+
+        this.boton.addEventListener("click", () => this.siguiente());
+        this.mostrar();
     }
 
-    items.forEach(item => {
-        item.addEventListener('click', () => {
-            activarSeccion(item.dataset.target);
+    mostrar() {
+        this.container.innerHTML = "";
+        const inicio = this.pagina * this.tam;
+        const fin = inicio + this.tam;
+        const bloque = this.items.slice(inicio, fin);
+
+        bloque.forEach(item => {
+            this.container.appendChild(this.renderFn(item));
         });
-    });
 
-    const params = new URLSearchParams(window.location.search);
-    const sec = params.get("sec");
-
-    if (sec) {
-        const map = {
-            "ultimas": "content-ultimas",
-            "memoriam": "content-memoriam",
-            "archivo": "content-archivo",
-            "galeria": "content-galeria"
-        };
-
-        activarSeccion(map[sec]);
+        this.boton.textContent = (fin >= this.items.length)
+            ? "Volver al inicio"
+            : "Cargar más";
     }
+
+    siguiente() {
+        this.pagina++;
+        if (this.pagina * this.tam >= this.items.length) {
+            this.pagina = 0;
+        }
+        this.mostrar();
+    }
+}
+
+/* ------------------------------
+   DATOS DE EJEMPLO
+--------------------------------*/
+const noticiasUltimas = [
+    { titulo: "Asamblea General 2024", fecha: "12/05/2024" },
+    { titulo: "Nueva actividad cultural", fecha: "03/05/2024" },
+    { titulo: "Visita institucional", fecha: "28/04/2024" },
+    { titulo: "Publicación del boletín 67", fecha: "20/04/2024" },
+    { titulo: "Jornada deportiva AEIK", fecha: "15/04/2024" },
+    { titulo: "Colaboración con entidades", fecha: "10/04/2024" },
+    { titulo: "Premio a la innovación", fecha: "01/04/2024" }
+];
+
+const noticiasMemoriam = [
+    { titulo: "Homenaje a Juan Pérez", fecha: "2023" },
+    { titulo: "Recordando a María López", fecha: "2022" }
+];
+
+const noticiasArchivo = [
+    { titulo: "Noticias 2015", fecha: "2015" },
+    { titulo: "Noticias 2014", fecha: "2014" },
+    { titulo: "Noticias 2013", fecha: "2013" }
+];
+
+const noticiasGaleria = [
+    { titulo: "Fotos del evento 2024", fecha: "2024" },
+    { titulo: "Vídeo de la jornada", fecha: "2024" }
+];
+
+/* ------------------------------
+   RENDERIZADOR DE NOTICIAS
+--------------------------------*/
+function renderNoticia(item) {
+    const div = document.createElement("div");
+    div.className = "noticia-item";
+    div.innerHTML = `
+        <h3>${item.titulo}</h3>
+        <p>${item.fecha}</p>
+    `;
+    return div;
+}
+
+/* ------------------------------
+   ACTIVAR PAGINADORES
+--------------------------------*/
+new Paginador(noticiasUltimas, renderNoticia, gridUltimas, btnUltimas);
+new Paginador(noticiasMemoriam, renderNoticia, gridMemoriam, btnMemoriam);
+new Paginador(noticiasArchivo, renderNoticia, gridArchivo, btnArchivo);
+new Paginador(noticiasGaleria, renderNoticia, gridGaleria, btnGaleria);
+
 </script>
 
 </body>
