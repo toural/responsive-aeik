@@ -105,22 +105,35 @@
         margin-top: 20px;
     }
 
-    .revista-item {
-        display: flex;
-        justify-content: center;
-    }
-
     .revista-item img {
         width: 100%;
         max-width: 160px;
         border-radius: 6px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         transition: transform 0.25s ease, box-shadow 0.25s ease;
+        display: block;
+        margin: 0 auto;
     }
 
     .revista-item:hover img {
         transform: scale(1.04);
         box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    }
+
+    .btn-cargar {
+        margin-top: 25px;
+        padding: 12px 20px;
+        background: #1A73B8;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .btn-cargar:hover {
+        background: #155d94;
     }
 
     /* ============================
@@ -146,7 +159,6 @@
 
     .tab-item.active {
         border-bottom: 3px solid #1A73B8;
-        color: #1A73B8;
     }
 
     /* ============================
@@ -167,11 +179,11 @@
         }
 
         .right-panel {
-            display: none; /* OCULTAR PANEL LATERAL EN MÓVIL */
+            display: none;
         }
 
         .tabs-movil {
-            display: block; /* MOSTRAR TABS EN MÓVIL */
+            display: block;
         }
 
         .revista-grid {
@@ -180,8 +192,7 @@
     }
 
     @media (max-width: 600px) {
-        .left-panel,
-        .right-panel {
+        .left-panel {
             padding: 18px;
         }
 
@@ -219,31 +230,12 @@
             <div class="tab-item" data-target="content-archivo">Archivo</div>
         </div>
 
-        <!-- SECCIONES -->
+        <!-- SECCIÓN REVISTAS -->
         <div id="content-revistas" class="content-block active">
             <h2>Revistas AEIK</h2>
 
-            <div class="revista-grid">
-                <!-- EJEMPLOS — Sustituye por tus datos reales -->
-                <a href="revistas/AEIK_71.pdf" class="revista-item" target="_blank">
-                    <img src="imagenes/revistas/71.png" alt="Revista AEIK Nº71">
-                </a>
-                <a href="revistas/AEIK_70.pdf" class="revista-item" target="_blank">
-                    <img src="imagenes/revistas/70.png" alt="Revista AEIK Nº70">
-                </a>
-                <a href="revistas/AEIK_69.pdf" class="revista-item" target="_blank">
-                    <img src="imagenes/revistas/69.png" alt="Revista AEIK Nº69">
-                </a>
-                <a href="revistas/AEIK_68.pdf" class="revista-item" target="_blank">
-                    <img src="imagenes/revistas/68.png" alt="Revista AEIK Nº68">
-                </a>
-                <a href="revistas/AEIK_67.pdf" class="revista-item" target="_blank">
-                    <img src="imagenes/revistas/67.png" alt="Revista AEIK Nº67">
-                </a>
-                <a href="revistas/AEIK_66.pdf" class="revista-item" target="_blank">
-                    <img src="imagenes/revistas/66.png" alt="Revista AEIK Nº66">
-                </a>
-            </div>
+            <div id="revistaGrid" class="revista-grid"></div>
+            <button id="btnRevistas" class="btn-cargar">Cargar más</button>
         </div>
 
         <div id="content-boletines" class="content-block">
@@ -306,28 +298,88 @@ function activarSeccion(targetId) {
     if (tabItem) tabItem.classList.add('active');
 }
 
-/* Click en panel lateral */
 items.forEach(item => {
     item.addEventListener('click', () => activarSeccion(item.dataset.target));
 });
 
-/* Click en tabs móvil */
 tabs.forEach(tab => {
     tab.addEventListener('click', () => activarSeccion(tab.dataset.target));
 });
 
-/* Parámetro URL */
-const params = new URLSearchParams(window.location.search);
-const sec = params.get("sec");
+/* ------------------------------
+   PAGINADOR GENÉRICO
+--------------------------------*/
+class Paginador {
+    constructor(items, renderFn, container, boton, tam = 9) {
+        this.items = items;
+        this.renderFn = renderFn;
+        this.container = container;
+        this.boton = boton;
+        this.tam = tam;
+        this.pagina = 0;
 
-if (sec) {
-    const map = {
-        "revistas": "content-revistas",
-        "boletines": "content-boletines",
-        "archivo": "content-archivo"
-    };
-    activarSeccion(map[sec]);
+        this.boton.addEventListener("click", () => this.siguiente());
+        this.mostrar();
+    }
+
+    mostrar() {
+        this.container.innerHTML = "";
+        const inicio = this.pagina * this.tam;
+        const fin = inicio + this.tam;
+        const bloque = this.items.slice(inicio, fin);
+
+        bloque.forEach(item => {
+            this.container.appendChild(this.renderFn(item));
+        });
+
+        this.boton.textContent = (fin >= this.items.length)
+            ? "Volver al inicio"
+            : "Cargar más";
+    }
+
+    siguiente() {
+        this.pagina++;
+        if (this.pagina * this.tam >= this.items.length) {
+            this.pagina = 0;
+        }
+        this.mostrar();
+    }
 }
+
+/* ------------------------------
+   DATOS DE EJEMPLO (SUSTITUIR)
+--------------------------------*/
+const revistas = [
+    { pdf: "revistas/AEIK_71.pdf", img: "imagenes/revistas/71.png" },
+    { pdf: "revistas/AEIK_70.pdf", img: "imagenes/revistas/70.png" },
+    { pdf: "revistas/AEIK_69.pdf", img: "imagenes/revistas/69.png" },
+    { pdf: "revistas/AEIK_68.pdf", img: "imagenes/revistas/68.png" },
+    { pdf: "revistas/AEIK_67.pdf", img: "imagenes/revistas/67.png" },
+    { pdf: "revistas/AEIK_66.pdf", img: "imagenes/revistas/66.png" },
+    { pdf: "revistas/AEIK_65.pdf", img: "imagenes/revistas/65.png" },
+    { pdf: "revistas/AEIK_64.pdf", img: "imagenes/revistas/64.png" },
+    { pdf: "revistas/AEIK_63.pdf", img: "imagenes/revistas/63.png" },
+    { pdf: "revistas/AEIK_62.pdf", img: "imagenes/revistas/62.png" },
+    { pdf: "revistas/AEIK_61.pdf", img: "imagenes/revistas/61.png" }
+];
+
+/* ------------------------------
+   RENDERIZADOR DE REVISTAS
+--------------------------------*/
+function renderRevista(item) {
+    const a = document.createElement("a");
+    a.href = item.pdf;
+    a.target = "_blank";
+    a.className = "revista-item";
+    a.innerHTML = `<img src="${item.img}" alt="">`;
+    return a;
+}
+
+/* ------------------------------
+   ACTIVAR PAGINADOR
+--------------------------------*/
+new Paginador(revistas, renderRevista, revistaGrid, btnRevistas);
+
 </script>
 
 </body>
