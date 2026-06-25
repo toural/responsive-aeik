@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>AEIK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
 
@@ -170,9 +171,19 @@
     .sub-item:hover {
         background: #eef5ff;
     }
+/* Tablet: 2 columnas */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-
-        
+/* Móvil: 1 columna */
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}  
     </style>
 </head>
 
